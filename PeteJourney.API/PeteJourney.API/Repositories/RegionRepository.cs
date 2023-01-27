@@ -1,4 +1,5 @@
-﻿using PeteJourney.API.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using PeteJourney.API.Data;
 using PeteJourney.API.Models.Domain;
 
 namespace PeteJourney.API.Repositories
@@ -12,9 +13,9 @@ namespace PeteJourney.API.Repositories
                 this.db = db;
         }
 
-        public IEnumerable<Region> GetAll()
+        public async Task<IEnumerable<Region>> GetAllAsync()
         {
-            return db.Regions.ToList();
+            return await db.Regions.ToListAsync();
         }
     }
 }
