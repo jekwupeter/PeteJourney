@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PeteJourney.API.Data;
+using PeteJourney.API.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,10 @@ builder.Services.AddDbContext<PeteJourneyDbContext>(options =>
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString("PeteJourney"));
     });
+
+builder.Services.AddScoped<IRegionRepository, RegionRepository>();
+
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 var app = builder.Build();
 

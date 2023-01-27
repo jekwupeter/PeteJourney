@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PeteJourney.API.Models;
+using PeteJourney.API.Models.Domain;
 
 namespace PeteJourney.API.Data
 {

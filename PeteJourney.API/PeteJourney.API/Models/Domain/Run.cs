@@ -1,4 +1,4 @@
-﻿namespace PeteJourney.API.Models
+﻿namespace PeteJourney.API.Models.Domain
 {
     public class Run
     {
