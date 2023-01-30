@@ -1,10 +1,7 @@
-﻿using PeteJourney.API.Models.Domain;
-
-namespace PeteJourney.API.Models.DTO
+﻿namespace PeteJourney.API.Models.DTO
 {
-    public class Region
+    public class UpdateRegionRequest
     {
-        public Guid Id { get; set; }
         public string code { get; set; }
         public string Name { get; set; }
         public double Area { get; set; }

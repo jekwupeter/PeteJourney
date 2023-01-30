@@ -47,5 +47,92 @@ namespace PeteJourney.API.Controllers
 
             return Ok(regionsDTO);
         }
+
+        [HttpGet]
+        [Route("{id:guid}")]
+        [ActionName("GetRegionAsync")]
+        public async Task<IActionResult> GetRegionAsync(Guid id)
+        {
+            var region = await regionRepository.GetAsync(id);
+
+            if (region == null)
+            {
+                return NotFound();
+            }
+
+            var regionDTO = mapper.Map<Models.DTO.Region>(region);
+
+            return Ok(regionDTO);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddRegionAsync(Models.DTO.AddRegionRequest addRegionRequest)
+        {
+            // request to domain model
+            /*
+            var region = new Models.Domain.Region()
+            {
+                code = addRegionRequest.code,
+                Area = addRegionRequest.Area,
+                Lat = addRegionRequest.Lat,
+                Long = addRegionRequest.Long,
+                Name = addRegionRequest.Name,
+                Population = addRegionRequest.Population
+            }; */
+            var region = mapper.Map<Models.Domain.Region>(addRegionRequest);
+
+            // pass details to repository
+            region = await regionRepository.AddAsync(region);
+
+            //convert back to dto
+            var regionDTO = mapper.Map<Models.DTO.Region>(region);
+
+            return CreatedAtAction(nameof(GetRegionAsync), new { Id = regionDTO.Id}, regionDTO);
+        }
+
+        [HttpDelete]
+        [Route("{Id:guid}")]
+        public async Task<IActionResult> DeleteRegionAsync(Guid Id)
+        {
+            // get region frm db
+            var deletedRegion = await regionRepository.DeleteAsync(Id);
+
+            // check for null
+            if (deletedRegion == null)
+            {
+                return NotFound();
+            }
+
+            // cponvert to dto
+            
+            Models.DTO.Region regionDTO = mapper.Map<Models.DTO.Region>(deletedRegion);
+            
+            // return ok
+            return Ok(deletedRegion);
+        }
+
+        [HttpPut]
+        [Route("{Id:guid}")]
+        public async Task<IActionResult> UpdateRegionAsync([FromRoute]Guid Id, [FromBody]Models.DTO.UpdateRegionRequest region)
+        {
+            // convert to domain model
+            var regionToUpdate = mapper.Map<Models.Domain.Region>(region);
+
+            // update
+            var updatedRegion = await regionRepository.UpdateAsync(Id, regionToUpdate);
+
+            // check for null
+            if (updatedRegion == null)
+            {
+                return NotFound();
+            }
+
+            // convert to dto
+            var updatedRegionDTO = mapper.Map<Models.DTO.UpdateRegionRequest>(updatedRegion);
+
+            // return ok
+            return Ok(updatedRegion);
+        }
     }
 }
