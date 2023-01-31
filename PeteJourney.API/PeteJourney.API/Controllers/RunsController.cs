@@ -126,6 +126,7 @@ namespace PeteJourney.API.Controllers
         #region validate methods
         private async Task<bool> ValidateAddRunAsync(Models.DTO.AddRunRequest addRunRequest)
         {
+            /*
             if (addRunRequest == null)
             {
                 ModelState.AddModelError(nameof(addRunRequest), $"{nameof(addRunRequest)} cannot be empty");
@@ -144,12 +145,7 @@ namespace PeteJourney.API.Controllers
                 ModelState.AddModelError(nameof(addRunRequest.Length), $"{nameof(addRunRequest.Length)} cannot be empty");
                 return false;
             }
-
-            if (addRunRequest.RegionId == null)
-            {
-                ModelState.AddModelError(nameof(addRunRequest), $"{nameof(addRunRequest)} cannot be empty");
-                return false;
-            }
+            */
 
             Models.Domain.Region? region = await regionRepository.GetAsync(addRunRequest.RegionId);
 
@@ -175,7 +171,7 @@ namespace PeteJourney.API.Controllers
         }
 
         private async Task<bool> ValidateUpdateRunAsync(Models.DTO.UpdateRunRequest updateRunRequest)
-        {
+        {/*
             if (updateRunRequest == null)
             {
                 ModelState.AddModelError(nameof(updateRunRequest), $"{nameof(updateRunRequest)} cannot be empty");
@@ -192,11 +188,7 @@ namespace PeteJourney.API.Controllers
             {
                 ModelState.AddModelError(nameof(updateRunRequest.Length), $"{nameof(updateRunRequest.Length)} cannot be empty");
             }
-
-            if (updateRunRequest.RegionId == null)
-            {
-                ModelState.AddModelError(nameof(updateRunRequest), $"{nameof(updateRunRequest)} cannot be empty");
-            }
+            */
 
             Models.Domain.Region? region = await regionRepository.GetAsync(updateRunRequest.RegionId);
 

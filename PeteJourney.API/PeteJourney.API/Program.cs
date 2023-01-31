@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using PeteJourney.API.Data;
 using PeteJourney.API.Repositories;
@@ -20,6 +21,8 @@ builder.Services.AddScoped<IRegionRepository, RegionRepository>();
 builder.Services.AddScoped<IRunRepository, RunRepository>();
 builder.Services.AddScoped<IRunDifficultyRepository, RunDifficultyRepository>();
 
+builder.Services.AddFluentValidation(opt => opt.RegisterValidatorsFromAssemblyContaining<Program>());
+//builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 var app = builder.Build();

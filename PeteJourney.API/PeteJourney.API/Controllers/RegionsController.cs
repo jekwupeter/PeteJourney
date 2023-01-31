@@ -81,10 +81,11 @@ namespace PeteJourney.API.Controllers
                 Name = addRegionRequest.Name,
                 Population = addRegionRequest.Population
             }; */
-            if (!ValidateAddRegionAsync(addRegionRequest))
+            /*if (!ValidateAddRegionAsync(addRegionRequest))
             {
                 return BadRequest(ModelState);
-            }
+            }*/
+
             var region = mapper.Map<Models.Domain.Region>(addRegionRequest);
 
             // pass details to repository
@@ -146,7 +147,7 @@ namespace PeteJourney.API.Controllers
             return Ok(updatedRegion);
         }
 
-        #region Private methods
+        #region valdiator methods
         private bool ValidateAddRegionAsync(Models.DTO.AddRegionRequest addRegionRequest)
         {
             if (addRegionRequest == null)

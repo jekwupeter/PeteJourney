@@ -51,11 +51,12 @@ namespace PeteJourney.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddRunDifficultyAsync(Models.DTO.AddRunDifficultyRequest addRunDifficultyRequest)
         {
+            /*
             // validate input
             if (!ValidateAddRDAsync(addRunDifficultyRequest))
             {
                 return BadRequest(ModelState);
-            }
+            }*/
 
             // request to domain model
 
@@ -95,12 +96,14 @@ namespace PeteJourney.API.Controllers
         [Route("{Id:guid}")]
         public async Task<IActionResult> UpdateRunDifficultyAsync([FromRoute] Guid Id, [FromBody] Models.DTO.UpdateRunDifficultyRequest updateRunDifficultyRequest)
         {
+            /*
             // validate input
             if (!ValidateUpdateRDAsync(updateRunDifficultyRequest))
             {
                 return BadRequest(ModelState);
 
             }
+            */
 
             // convert to domain model
             var rdToUpdate = mapper.Map<Models.Domain.RunDifficulty>(updateRunDifficultyRequest);
