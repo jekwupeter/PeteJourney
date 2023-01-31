@@ -1,5 +1,4 @@
-﻿using PeteJourney.API.Models.Domain;
-
+﻿
 namespace PeteJourney.API.Models.DTO
 {
     public class Region

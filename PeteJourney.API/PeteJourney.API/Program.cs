@@ -17,6 +17,7 @@ builder.Services.AddDbContext<PeteJourneyDbContext>(options =>
     });
 
 builder.Services.AddScoped<IRegionRepository, RegionRepository>();
+builder.Services.AddScoped<IRunRepository, RunRepository>();
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 

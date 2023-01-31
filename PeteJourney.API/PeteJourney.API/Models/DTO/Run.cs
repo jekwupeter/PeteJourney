@@ -1,4 +1,5 @@
-﻿namespace PeteJourney.API.Models.Domain
+﻿
+namespace PeteJourney.API.Models.DTO
 {
     public class Run
     {
@@ -7,8 +8,7 @@
         public double Length { get; set; }
         public Guid RegionId { get; set; }
         public Guid RunDifficultyId { get; set; }
-        
-        // navigation properties
+
         public Region Region { get; set; }
         public RunDifficulty RunDifficulty { get; set; }
     }

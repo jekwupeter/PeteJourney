@@ -16,7 +16,7 @@ namespace PeteJourney.API.Repositories
         public async Task<Region> AddAsync(Region region)
         {
             region.Id = Guid.NewGuid();
-            await db.AddAsync(region);
+            await db.Regions.AddAsync(region);
             await db.SaveChangesAsync();
 
             return region;
