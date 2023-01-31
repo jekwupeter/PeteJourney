@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PeteJourney.API.Models;
+using PeteJourney.API.Models.DTO;
 using PeteJourney.API.Repositories;
 
 namespace PeteJourney.API.Controllers
@@ -80,6 +81,10 @@ namespace PeteJourney.API.Controllers
                 Name = addRegionRequest.Name,
                 Population = addRegionRequest.Population
             }; */
+            if (!ValidateAddRegionAsync(addRegionRequest))
+            {
+                return BadRequest(ModelState);
+            }
             var region = mapper.Map<Models.Domain.Region>(addRegionRequest);
 
             // pass details to repository
@@ -88,7 +93,7 @@ namespace PeteJourney.API.Controllers
             //convert back to dto
             var regionDTO = mapper.Map<Models.DTO.Region>(region);
 
-            return CreatedAtAction(nameof(GetRegionAsync), new { Id = regionDTO.Id}, regionDTO);
+            return CreatedAtAction(nameof(GetRegionAsync), new { Id = regionDTO.Id }, regionDTO);
         }
 
         [HttpDelete]
@@ -105,17 +110,23 @@ namespace PeteJourney.API.Controllers
             }
 
             // cponvert to dto
-            
+
             Models.DTO.Region regionDTO = mapper.Map<Models.DTO.Region>(deletedRegion);
-            
+
             // return ok
             return Ok(deletedRegion);
         }
 
         [HttpPut]
         [Route("{Id:guid}")]
-        public async Task<IActionResult> UpdateRegionAsync([FromRoute]Guid Id, [FromBody]Models.DTO.UpdateRegionRequest region)
+        public async Task<IActionResult> UpdateRegionAsync([FromRoute] Guid Id, [FromBody] Models.DTO.UpdateRegionRequest region)
         {
+            //validate input
+            if (!ValidateUpdateRegionAsync(region))
+            {
+                return BadRequest(ModelState);
+             }
+
             // convert to domain model
             var regionToUpdate = mapper.Map<Models.Domain.Region>(region);
 
@@ -134,5 +145,82 @@ namespace PeteJourney.API.Controllers
             // return ok
             return Ok(updatedRegion);
         }
+
+        #region Private methods
+        private bool ValidateAddRegionAsync(Models.DTO.AddRegionRequest addRegionRequest)
+        {
+            if (addRegionRequest == null)
+            {
+                ModelState.AddModelError(nameof(addRegionRequest), "Add region data");
+                return false;
+            }
+            if (string.IsNullOrEmpty(addRegionRequest.code))
+            {
+                ModelState.AddModelError(nameof(addRegionRequest.code), $"{nameof(addRegionRequest.code)} string cannot null");
+            }
+            if (addRegionRequest.Area <= 0)
+            {
+                ModelState.AddModelError(nameof(addRegionRequest.Area), $"{nameof(addRegionRequest.Area)} cannot less zero");
+            }
+            if (addRegionRequest.Long <= 0)
+            {
+                ModelState.AddModelError(nameof(addRegionRequest.Long), $"{nameof(addRegionRequest.Long)} cannot be less than zero");
+            }
+            if (addRegionRequest.Lat <= 0)
+            {
+                ModelState.AddModelError(nameof(addRegionRequest.Lat), $"{nameof(addRegionRequest.Lat)} cannot be less than zero");
+            }
+            if (addRegionRequest.Population < 0)
+            {
+                ModelState.AddModelError(nameof(addRegionRequest.Population), $"{nameof(addRegionRequest.Population)} cannot be less than zero");
+            }
+
+            if (ModelState.ErrorCount > 0)
+            {
+                return false;
+            }
+
+
+            return true;
+        }
+
+        private bool ValidateUpdateRegionAsync(Models.DTO.UpdateRegionRequest updateRegion)
+        {
+            if (updateRegion == null)
+            {
+                ModelState.AddModelError(nameof(updateRegion), "Add region data");
+                return false;
+            }
+            if (string.IsNullOrEmpty(updateRegion.code))
+            {
+                ModelState.AddModelError(nameof(updateRegion.code), $"{nameof(updateRegion.code)} string cannot null");
+            }
+            if (updateRegion.Area <= 0)
+            {
+                ModelState.AddModelError(nameof(updateRegion.Area), $"{nameof(updateRegion.Area)} cannot less zero");
+            }
+            if (updateRegion.Long <= 0)
+            {
+                ModelState.AddModelError(nameof(updateRegion.Long), $"{nameof(updateRegion.Long)} cannot be less than zero");
+            }
+            if (updateRegion.Lat <= 0)
+            {
+                ModelState.AddModelError(nameof(updateRegion.Lat), $"{nameof(updateRegion.Lat)} cannot be less than zero");
+            }
+            if (updateRegion.Population < 0)
+            {
+                ModelState.AddModelError(nameof(updateRegion.Population), $"{nameof(updateRegion.Population)} cannot be less than zero");
+            }
+
+            if (ModelState.ErrorCount > 0)
+            {
+                return false;
+            }
+
+
+            return true;
+
+        }
+        #endregion
     }
 }
