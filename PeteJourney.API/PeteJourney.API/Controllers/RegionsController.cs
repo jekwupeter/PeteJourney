@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PeteJourney.API.Models;
 using PeteJourney.API.Models.DTO;
@@ -8,6 +9,7 @@ namespace PeteJourney.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class RegionsController : Controller
     {
         private readonly IRegionRepository regionRepository;
@@ -20,6 +22,7 @@ namespace PeteJourney.API.Controllers
         }
 
         [HttpGet]
+        //[AllowAnonymous]
         public async Task<IActionResult> GetAllRegionsAsync()
         {
             var regions = await regionRepository.GetAllAsync();
@@ -50,6 +53,7 @@ namespace PeteJourney.API.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [Route("{id:guid}")]
         [ActionName("GetRegionAsync")]
         public async Task<IActionResult> GetRegionAsync(Guid id)
