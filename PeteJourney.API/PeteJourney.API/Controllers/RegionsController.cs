@@ -22,7 +22,7 @@ namespace PeteJourney.API.Controllers
         }
 
         [HttpGet]
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllRegionsAsync()
         {
             var regions = await regionRepository.GetAllAsync();
@@ -53,7 +53,7 @@ namespace PeteJourney.API.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize(Roles = "writer, reader")]
         [Route("{id:guid}")]
         [ActionName("GetRegionAsync")]
         public async Task<IActionResult> GetRegionAsync(Guid id)
@@ -72,6 +72,7 @@ namespace PeteJourney.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "reader")]
         public async Task<IActionResult> AddRegionAsync(Models.DTO.AddRegionRequest addRegionRequest)
         {
             // request to domain model
@@ -103,6 +104,7 @@ namespace PeteJourney.API.Controllers
 
         [HttpDelete]
         [Route("{Id:guid}")]
+        [Authorize(Roles = "writer")]
         public async Task<IActionResult> DeleteRegionAsync(Guid Id)
         {
             // get region frm db
@@ -124,6 +126,7 @@ namespace PeteJourney.API.Controllers
 
         [HttpPut]
         [Route("{Id:guid}")]
+        [Authorize(Roles = "writer")]
         public async Task<IActionResult> UpdateRegionAsync([FromRoute] Guid Id, [FromBody] Models.DTO.UpdateRegionRequest region)
         {
             //validate input

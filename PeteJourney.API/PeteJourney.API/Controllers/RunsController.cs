@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using PeteJourney.API.Models;
 using PeteJourney.API.Models.DTO;
 using PeteJourney.API.Repositories;
+using System.Data;
 
 namespace PeteJourney.API.Controllers
 {
@@ -25,7 +27,8 @@ namespace PeteJourney.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllRegionsAsync()
+        [Authorize(Roles = "writer, reader")]
+        public async Task<IActionResult> GetAllRunsAsync()
         {
             var runsDomain = await runRepository.GetAllAsync();
 
@@ -36,6 +39,7 @@ namespace PeteJourney.API.Controllers
 
         [HttpGet]
         [Route("{id:guid}")]
+        [Authorize(Roles = "writer")]
         [ActionName("GetRunAsync")]
         public async Task<IActionResult> GetRunAsync(Guid id)
         {
@@ -53,6 +57,7 @@ namespace PeteJourney.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "writer")]
         public async Task<IActionResult> AddRunAsync(Models.DTO.AddRunRequest addRunRequest)
         {
             // validate incoming data
@@ -75,6 +80,7 @@ namespace PeteJourney.API.Controllers
 
         [HttpDelete]
         [Route("{Id:guid}")]
+        [Authorize(Roles = "writer")]
         public async Task<IActionResult> RunAsync(Guid Id)
         {
             // get region frm db
@@ -96,6 +102,7 @@ namespace PeteJourney.API.Controllers
 
         [HttpPut]
         [Route("{Id:guid}")]
+        [Authorize(Roles = "writer")]
         public async Task<IActionResult> UpdateRunAsync([FromRoute] Guid Id, [FromBody] Models.DTO.UpdateRunRequest run)
         {
             // validate 

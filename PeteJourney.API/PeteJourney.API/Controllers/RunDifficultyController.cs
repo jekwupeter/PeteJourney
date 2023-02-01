@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PeteJourney.API.Models;
 using PeteJourney.API.Models.DTO;
 using PeteJourney.API.Profiles;
 using PeteJourney.API.Repositories;
+using System.Data;
 
 namespace PeteJourney.API.Controllers
 {
@@ -21,6 +23,7 @@ namespace PeteJourney.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "writer, reader")]
         public async Task<IActionResult> GetAllRunDifficultyAsync()
         {
             var runDifficulties = await rdRepository.GetAllAsync();
@@ -32,6 +35,7 @@ namespace PeteJourney.API.Controllers
 
         [HttpGet]
         [Route("{id:guid}")]
+        [Authorize(Roles = "writer, reader")]
         [ActionName("GetRunDifficultyAsync")]
         public async Task<IActionResult> GetRunDifficultyAsync(Guid id)
         {
@@ -49,6 +53,7 @@ namespace PeteJourney.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "writer")]
         public async Task<IActionResult> AddRunDifficultyAsync(Models.DTO.AddRunDifficultyRequest addRunDifficultyRequest)
         {
             /*
@@ -72,6 +77,7 @@ namespace PeteJourney.API.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "writer")]
         [Route("{Id:guid}")]
         public async Task<IActionResult> DeleteRunDifficultyAsync(Guid Id)
         {
@@ -93,6 +99,7 @@ namespace PeteJourney.API.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "writer")]
         [Route("{Id:guid}")]
         public async Task<IActionResult> UpdateRunDifficultyAsync([FromRoute] Guid Id, [FromBody] Models.DTO.UpdateRunDifficultyRequest updateRunDifficultyRequest)
         {
