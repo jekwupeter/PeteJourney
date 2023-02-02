@@ -11,13 +11,13 @@ namespace PeteJourney.API.Repositories
             {
                 FirstName = "Read Only", LastName = "User", Email = "readonly@user.com",
                 Id = Guid.NewGuid(), Username="readonly@user.com", Password="Readonly@User",
-                Roles = new List<string> { "reader"}
+                //Roles = new List<string> { "reader"}
             },
             new User()
             {
                 FirstName = "Read Write", LastName = "User", Email = "readwrite@user.com",
                 Id = Guid.NewGuid() , Username="readwrite@user.com", Password="Readwrite@User",
-                Roles = new List<string> { "reader", "writer"}
+                //Roles = new List<string> { "reader", "writer"}
             }
         };
 

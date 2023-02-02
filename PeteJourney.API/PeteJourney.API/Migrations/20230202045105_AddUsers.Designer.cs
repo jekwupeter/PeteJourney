@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PeteJourney.API.Data;
 
@@ -11,9 +12,10 @@ using PeteJourney.API.Data;
 namespace PeteJourney.API.Migrations
 {
     [DbContext(typeof(PeteJourneyDbContext))]
-    partial class PeteJourneyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230202045105_AddUsers")]
+    partial class AddUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
